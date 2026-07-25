@@ -1,3 +1,4 @@
+
 import { fetchPage } from './fetchPage.js';
 import { parseHtml } from '../utils/parseHtml.js';
 import { analyzeSeo } from '../utils/analyzeSeo.js';
@@ -10,6 +11,7 @@ import { checkTwitterCard } from '../utils/checkTwitterCard.js';
 import { checkCanonical } from '../utils/checkCanonical.js';
 import { checkStructuredData } from '../utils/checkStructuredData.js';
 import { checkPerformance } from "../utils/checkPerformance.js";
+
 export async function auditPage(url) {
   const page = await fetchPage(url);
 
@@ -28,6 +30,8 @@ export async function auditPage(url) {
   const performance = checkPerformance(page);
 
   return {
+    auditedAt: new Date().toISOString(),
+    apiVersion: "1.0.0",
     url: page.finalUrl,
     httpStatus: page.status,
     responseTimeMs: page.responseTimeMs,

@@ -5,6 +5,7 @@ import { calculateScore } from '../utils/calculateScore.js';
 import { checkRobots } from '../utils/checkRobots.js';
 import { checkFavicon } from '../utils/checkFavicon.js';
 import { checkSitemap } from '../utils/checkSitemap.js';
+import { checkOpenGraph } from '../utils/checkOpenGraph.js';
 export async function auditPage(url) {
   const page = await fetchPage(url);
 
@@ -14,6 +15,7 @@ export async function auditPage(url) {
   const robots = await checkRobots(page.finalUrl);
   const favicon = await checkFavicon(page.finalUrl);
   const sitemap = await checkSitemap(page.finalUrl);
+  const openGraph = checkOpenGraph(page.html);
   return {
     url: page.finalUrl,
     httpStatus: page.status,
@@ -25,5 +27,6 @@ export async function auditPage(url) {
     robots,
     favicon,
     sitemap,
+    openGraph,
   };
 }

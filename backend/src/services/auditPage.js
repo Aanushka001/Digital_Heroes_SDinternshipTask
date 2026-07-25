@@ -6,6 +6,7 @@ import { checkRobots } from '../utils/checkRobots.js';
 import { checkFavicon } from '../utils/checkFavicon.js';
 import { checkSitemap } from '../utils/checkSitemap.js';
 import { checkOpenGraph } from '../utils/checkOpenGraph.js';
+import { checkTwitterCard } from '../utils/checkTwitterCard.js';
 export async function auditPage(url) {
   const page = await fetchPage(url);
 
@@ -16,6 +17,7 @@ export async function auditPage(url) {
   const favicon = await checkFavicon(page.finalUrl);
   const sitemap = await checkSitemap(page.finalUrl);
   const openGraph = checkOpenGraph(page.html);
+  const twitterCard = checkTwitterCard(page.html);
   return {
     url: page.finalUrl,
     httpStatus: page.status,
@@ -28,5 +30,6 @@ export async function auditPage(url) {
     favicon,
     sitemap,
     openGraph,
+    twitterCard,
   };
 }

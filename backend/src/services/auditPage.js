@@ -18,10 +18,11 @@ export async function auditPage(url) {
   const parsed = parseHtml(page.html);
   const analysis = analyzeSeo(parsed);
   const summary = calculateScore(analysis);
-
-  const robots = await checkRobots(page.finalUrl);
-  const favicon = await checkFavicon(page.finalUrl);
-  const sitemap = await checkSitemap(page.finalUrl);
+  const [robots, favicon, sitemap] = await Promise.all([
+  checkRobots(page.finalUrl),
+  checkFavicon(page.finalUrl),
+  checkSitemap(page.finalUrl),
+]);
 
   const openGraph = checkOpenGraph(page.html);
   const twitterCard = checkTwitterCard(page.html);

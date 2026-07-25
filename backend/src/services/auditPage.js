@@ -3,6 +3,7 @@ import { parseHtml } from '../utils/parseHtml.js';
 import { analyzeSeo } from '../utils/analyzeSeo.js';
 import { calculateScore } from '../utils/calculateScore.js';
 import { checkRobots } from '../utils/checkRobots.js';
+import { checkFavicon } from '../utils/checkFavicon.js';
 export async function auditPage(url) {
   const page = await fetchPage(url);
 
@@ -10,6 +11,7 @@ export async function auditPage(url) {
   const analysis = analyzeSeo(parsed);
   const summary = calculateScore(analysis);
   const robots = await checkRobots(page.finalUrl);
+  const favicon = await checkFavicon(page.finalUrl);
   return {
     url: page.finalUrl,
     httpStatus: page.status,
@@ -19,5 +21,6 @@ export async function auditPage(url) {
     analysis,
     summary,
     robots,
+    favicon,
   };
 }

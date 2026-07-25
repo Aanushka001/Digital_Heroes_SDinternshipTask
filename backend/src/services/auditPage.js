@@ -7,6 +7,8 @@ import { checkFavicon } from '../utils/checkFavicon.js';
 import { checkSitemap } from '../utils/checkSitemap.js';
 import { checkOpenGraph } from '../utils/checkOpenGraph.js';
 import { checkTwitterCard } from '../utils/checkTwitterCard.js';
+import { checkCanonical } from '../utils/checkCanonical.js';
+import { checkStructuredData } from '../utils/checkStructuredData.js';
 export async function auditPage(url) {
   const page = await fetchPage(url);
 
@@ -18,6 +20,9 @@ export async function auditPage(url) {
   const sitemap = await checkSitemap(page.finalUrl);
   const openGraph = checkOpenGraph(page.html);
   const twitterCard = checkTwitterCard(page.html);
+  const canonical = checkCanonical(page.html);
+
+const structuredData = checkStructuredData(page.html);
   return {
     url: page.finalUrl,
     httpStatus: page.status,
@@ -31,5 +36,7 @@ export async function auditPage(url) {
     sitemap,
     openGraph,
     twitterCard,
+    canonical,
+  structuredData,
   };
 }

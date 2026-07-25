@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+
 import { config } from './config/index.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
@@ -9,6 +10,7 @@ import {
   NotHtmlError,
   InvalidUrlError,
 } from './utils/errors.js';
+import { validateUrl } from './middleware/validateUrl.js';
 
 const app = express();
 
@@ -35,27 +37,36 @@ app.get('/health', (req, res) => {
   });
 });
 
-// TEMPORARY — proves the error handler works before the real audit route exists.
-// We delete this route in the "wire everything together" step.
 app.get('/test-error/:type', (req, res, next) => {
   const generators = {
     timeout: () => new TimeoutError(10000),
     dns: () => new DnsFailureError('this-does-not-exist.example'),
     nothtml: () => new NotHtmlError('application/json'),
     invalid: () => new InvalidUrlError(),
-    crash: () => { throw new Error('Simulated unexpected crash'); },
+    crash: () => {
+      throw new Error('Simulated unexpected crash');
+    },
   };
+
   const makeError = generators[req.params.type];
+
   if (!makeError) {
-    return res.status(400).json({ error: `Unknown type. Try: ${Object.keys(generators).join(', ')}` });
+    return res.status(400).json({
+      error: `Unknown type. Try: ${Object.keys(generators).join(', ')}`,
+    });
   }
+
   next(makeError());
 });
 
-// Must come after all real routes — catches anything that didn't match
-app.use(notFoundHandler);
+app.post('/test-validate', validateUrl, (req, res) => {
+  res.json({
+    success: true,
+    receivedUrl: req.validatedUrl,
+  });
+});
 
-// Must be the very last app.use() — Express only calls 4-arg middleware for errors
+app.use(notFoundHandler);
 app.use(errorHandler);
 
 export default app;

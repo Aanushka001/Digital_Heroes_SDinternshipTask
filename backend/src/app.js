@@ -2,7 +2,9 @@ import express from 'express';
 import cors from 'cors';
 
 import { config } from './config/index.js';
+
 import { fetchPage } from './services/fetchPage.js';
+import { auditPage } from './services/auditPage.js';
 
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
@@ -14,7 +16,7 @@ import {
   NotHtmlError,
   InvalidUrlError,
 } from './utils/errors.js';
-import { parseHtml } from './utils/parseHtml.js';
+
 const app = express();
 
 const corsOptions = {
@@ -85,20 +87,20 @@ app.post('/test-fetch', validateUrl, async (req, res, next) => {
     next(err);
   }
 });
-app.post('/test-parse', validateUrl, async (req, res, next) => {
+
+app.post('/test-audit', validateUrl, async (req, res, next) => {
   try {
-    const page = await fetchPage(req.validatedUrl);
-    const report = parseHtml(page.html);
+    const report = await auditPage(req.validatedUrl);
 
     res.json({
       success: true,
-      url: page.finalUrl,
-      ...report,
+      report,
     });
   } catch (err) {
     next(err);
   }
 });
+
 app.use(notFoundHandler);
 app.use(errorHandler);
 

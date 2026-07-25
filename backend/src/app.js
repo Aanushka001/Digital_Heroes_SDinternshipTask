@@ -2,15 +2,18 @@ import express from 'express';
 import cors from 'cors';
 
 import { config } from './config/index.js';
+import { fetchPage } from './services/fetchPage.js';
+
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
+import { validateUrl } from './middleware/validateUrl.js';
+
 import {
   TimeoutError,
   DnsFailureError,
   NotHtmlError,
   InvalidUrlError,
 } from './utils/errors.js';
-import { validateUrl } from './middleware/validateUrl.js';
 
 const app = express();
 
@@ -64,6 +67,23 @@ app.post('/test-validate', validateUrl, (req, res) => {
     success: true,
     receivedUrl: req.validatedUrl,
   });
+});
+
+app.post('/test-fetch', validateUrl, async (req, res, next) => {
+  try {
+    const result = await fetchPage(req.validatedUrl);
+
+    res.json({
+      success: true,
+      status: result.status,
+      responseTimeMs: result.responseTimeMs,
+      finalUrl: result.finalUrl,
+      htmlLength: result.html.length,
+      htmlSnippet: result.html.slice(0, 200),
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 app.use(notFoundHandler);

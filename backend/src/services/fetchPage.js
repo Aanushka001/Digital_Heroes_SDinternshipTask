@@ -1,4 +1,3 @@
-// C:\Users\aanus\Desktop\Digital Heroes_SDinternshipTask\backend\src\services\fetchPage.js
 import { config } from '../config/index.js';
 import {
   DnsFailureError,
@@ -39,7 +38,10 @@ export async function fetchPage(url) {
       throw new DnsFailureError(extractHost(url));
     }
 
-    if (message.includes('redirects') || message.includes('redirect')) {
+    if (
+      message.toLowerCase().includes('redirect') ||
+      message.toLowerCase().includes('redirects')
+    ) {
       throw new RedirectLoopError();
     }
 
@@ -91,7 +93,7 @@ async function readBodyWithLimit(response, maxBytes) {
     totalBytes += value.byteLength;
 
     if (totalBytes > maxBytes) {
-      reader.cancel();
+      await reader.cancel();
       throw new ResponseTooLargeError();
     }
 

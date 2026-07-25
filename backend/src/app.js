@@ -14,7 +14,7 @@ import {
   NotHtmlError,
   InvalidUrlError,
 } from './utils/errors.js';
-
+import { parseHtml } from './utils/parseHtml.js';
 const app = express();
 
 const corsOptions = {
@@ -85,7 +85,20 @@ app.post('/test-fetch', validateUrl, async (req, res, next) => {
     next(err);
   }
 });
+app.post('/test-parse', validateUrl, async (req, res, next) => {
+  try {
+    const page = await fetchPage(req.validatedUrl);
+    const report = parseHtml(page.html);
 
+    res.json({
+      success: true,
+      url: page.finalUrl,
+      ...report,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
 app.use(notFoundHandler);
 app.use(errorHandler);
 

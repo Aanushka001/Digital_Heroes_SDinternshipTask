@@ -12,7 +12,12 @@ function App() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!url.trim()) return;
+
+    if (!url.trim()) {
+      setErrorMsg('Please enter a URL to audit.');
+      setStatus(STATE.ERROR);
+      return;
+    }
 
     setStatus(STATE.LOADING);
     setErrorMsg('');
@@ -61,18 +66,6 @@ function App() {
 }
 
 function ReportCard({ report }) {
-  const { parsed, summary } = report;
-
-  const extraChecks = [
-    { label: 'Robots.txt', data: report.robots },
-    { label: 'Favicon', data: report.favicon },
-    { label: 'Sitemap', data: report.sitemap },
-    { label: 'Open Graph tags', data: report.openGraph },
-    { label: 'Twitter Card tags', data: report.twitterCard },
-    { label: 'Canonical URL', data: report.canonical },
-    { label: 'Structured data', data: report.structuredData },
-  ];
-
   return (
     <div className="report-card">
       <h2>Report for {report.url}</h2>
@@ -80,32 +73,15 @@ function ReportCard({ report }) {
       <div className="metrics-grid">
         <Metric label="HTTP Status" value={report.httpStatus} />
         <Metric label="Response Time" value={`${report.responseTimeMs} ms`} />
-        <Metric label="H1 Count" value={parsed.h1Count} />
-        <Metric label="Images Missing Alt" value={parsed.missingAltCount} />
-        <Metric label="Word Count" value={parsed.wordCount} />
+        <Metric label="H1 Count" value={report.h1Count} />
+        <Metric label="Images Missing Alt" value={report.imagesMissingAlt} />
+        <Metric label="Word Count" value={report.wordCount} />
       </div>
 
       <div className="text-fields">
-        <p><strong>Title:</strong> {parsed.title || <em>none found</em>}</p>
-        <p><strong>Meta Description:</strong> {parsed.metaDescription || <em>none found</em>}</p>
+        <p><strong>Title:</strong> {report.pageTitle || <em>none found</em>}</p>
+        <p><strong>Meta Description:</strong> {report.metaDescription || <em>none found</em>}</p>
       </div>
-
-      {summary && (
-        <p className="score">
-          SEO Score: <strong>{summary.score}</strong> (Grade {summary.grade})
-        </p>
-      )}
-
-      <details className="extra-checks">
-        <summary>Extra checks</summary>
-        <ul>
-          {extraChecks.map(({ label, data }) => (
-            <li key={label} className={data?.exists ? 'ok' : 'warn'}>
-              {data?.exists ? '✅' : '⚠️'} {label} — {data?.message}
-            </li>
-          ))}
-        </ul>
-      </details>
     </div>
   );
 }

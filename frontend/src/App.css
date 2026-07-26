@@ -20,11 +20,7 @@ header { text-align: center; margin-bottom: 32px; }
 header h1 { font-size: 2rem; margin: 0; }
 .tagline { color: #9ca3af; margin-top: 8px; }
 
-.url-form {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 24px;
-}
+.url-form { display: flex; gap: 10px; margin-bottom: 24px; }
 
 .url-form input {
   flex: 1;
@@ -78,13 +74,6 @@ header h1 { font-size: 2rem; margin: 0; }
 .metric-value { font-size: 1.2rem; font-weight: 600; }
 
 .text-fields p { margin: 8px 0; }
-.score { margin-top: 16px; }
-
-.extra-checks { margin-top: 16px; }
-.extra-checks summary { cursor: pointer; color: #9ca3af; }
-.extra-checks ul { list-style: none; padding: 0; margin-top: 10px; }
-.extra-checks li { padding: 6px 0; }
-.extra-checks li.warn { color: #fbbf24; }
 
 footer { margin-top: auto; text-align: center; padding-top: 32px; }
 footer a { color: #9ca3af; text-decoration: none; font-size: 0.9rem; }

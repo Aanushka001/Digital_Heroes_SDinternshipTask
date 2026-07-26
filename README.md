@@ -5,7 +5,6 @@ A lightweight web auditing tool that analyzes any webpage URL and provides an in
 
 Developed as part of the **Digital Heroes SDE Internship Task**.
 
----
 
 # Live Deployment
 
@@ -14,7 +13,6 @@ Developed as part of the **Digital Heroes SDE Internship Task**.
 | Frontend Application | https://digital-heroes-s-dinternship-task.vercel.app/ |
 | Backend API | https://digital-heroes-sdinternshiptask.onrender.com |
 
----
 
 # Features
 
@@ -367,5 +365,3 @@ All generated suggestions were manually reviewed, implemented, and tested. Final
 Developed for the **Digital Heroes SDE Internship Task**.
 
 [https://digitalheroesco.com](https://digitalheroesco.com)
-
-```

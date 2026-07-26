@@ -21,6 +21,7 @@ backend
 │   │   ├── utils
 │   │   │   ├── errors.js
 │   │   │   ├── parseHtml.js
+│   ├── vitest.config.js
 frontend
 │   ├── .env
 │   ├── .env.example
@@ -32,7 +33,6 @@ frontend
 │   ├── public
 │   │   ├── favicon.svg
 │   │   ├── icons.svg
-│   ├── README.md
 │   ├── src
 │   │   ├── App.css
 │   │   ├── App.jsx
@@ -46,3 +46,11 @@ frontend
 │   │   │   ├── api.js
 │   ├── vite.config.js
 project_structure.txt
+README.md
+tests
+│   ├── backend
+│   │   ├── audit.test.js
+│   │   ├── parseHtml.test.js
+│   ├── frontend
+│   │   ├── App.test.jsx
+│   │   ├── setup.js

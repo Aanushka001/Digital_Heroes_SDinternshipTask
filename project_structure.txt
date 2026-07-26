@@ -1,56 +1,60 @@
 .
-.gitignore
-backend
-│   ├── .env
-│   ├── .env.example
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── server.js
-│   ├── src
-│   │   ├── app.js
-│   │   ├── config
-│   │   │   ├── index.js
-│   │   ├── middleware
-│   │   │   ├── errorHandler.js
-│   │   │   ├── notFoundHandler.js
-│   │   │   ├── validateUrl.js
-│   │   ├── routes
-│   │   ├── services
-│   │   │   ├── auditPage.js
-│   │   │   ├── fetchPage.js
-│   │   ├── utils
-│   │   │   ├── errors.js
-│   │   │   ├── parseHtml.js
-│   ├── vitest.config.js
-frontend
-│   ├── .env
-│   ├── .env.example
-│   ├── .gitignore
-│   ├── eslint.config.js
-│   ├── index.html
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── public
-│   │   ├── favicon.svg
-│   │   ├── icons.svg
-│   ├── src
-│   │   ├── App.css
-│   │   ├── App.jsx
-│   │   ├── assets
-│   │   │   ├── hero.png
-│   │   │   ├── react.svg
-│   │   │   ├── vite.svg
-│   │   ├── index.css
-│   │   ├── main.jsx
-│   │   ├── services
-│   │   │   ├── api.js
-│   ├── vite.config.js
-project_structure.txt
-README.md
-tests
-│   ├── backend
-│   │   ├── audit.test.js
-│   │   ├── parseHtml.test.js
-│   ├── frontend
-│   │   ├── App.test.jsx
-│   │   ├── setup.js
+./backend
+./backend/.env
+./backend/.env.example
+./backend/package-lock.json
+./backend/package.json
+./backend/server.js
+./backend/src
+./backend/src/app.js
+./backend/src/config
+./backend/src/config/index.js
+./backend/src/middleware
+./backend/src/middleware/errorHandler.js
+./backend/src/middleware/notFoundHandler.js
+./backend/src/middleware/validateUrl.js
+./backend/src/routes
+./backend/src/services
+./backend/src/services/auditPage.js
+./backend/src/services/fetchPage.js
+./backend/src/utils
+./backend/src/utils/errors.js
+./backend/src/utils/parseHtml.js
+./backend/tests
+./backend/tests/audit.test.js
+./backend/tests/parseHtml.test.js
+./backend/vitest.config.js
+./frontend
+./frontend/.env
+./frontend/.env.example
+./frontend/eslint.config.js
+./frontend/index.html
+./frontend/package-lock.json
+./frontend/package.json
+./frontend/public
+./frontend/public/favicon.svg
+./frontend/public/icons.svg
+./frontend/src
+./frontend/src/App.css
+./frontend/src/App.jsx
+./frontend/src/assets
+./frontend/src/assets/hero.png
+./frontend/src/assets/react.svg
+./frontend/src/assets/vite.svg
+./frontend/src/index.css
+./frontend/src/main.jsx
+./frontend/src/services
+./frontend/src/services/api.js
+./frontend/tests
+./frontend/tests/App.test.jsx
+./frontend/tests/setup.js
+./frontend/vite.config.js
+./project_structure.txt
+./README.md
+./screenshots
+./screenshots/backend-running.png
+./screenshots/desktop.ini
+./screenshots/digital-heroes-url.png
+./screenshots/frontend-ui-display.png
+./screenshots/github-url.png
+./screenshots/invalid-url-validation.png

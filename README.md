@@ -122,8 +122,6 @@ I used Claude as a development assistant throughout this project. It helped me u
 
 All suggestions were reviewed, implemented, and tested by me before being included in the project. I made the final decisions on the project structure, implementation, debugging, testing, and overall scope to ensure the application met the internship requirements.
 
-
-
 ## Credits
 
 Built for [Digital Heroes Training Task](https://digitalheroesco.com)

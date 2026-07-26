@@ -10,6 +10,8 @@ Built for the Digital Heroes SDE internship task.
 ---
 
 ## Project Structure
+## Project Structure
+
 
 Digital_Heroes_SDinternshipTask/
 ├── backend/ Node.js + Express API
@@ -17,12 +19,21 @@ Digital_Heroes_SDinternshipTask/
 │ ├── config/ Environment configuration
 │ ├── middleware/ URL validation + error handling
 │ ├── services/ fetchPage, auditPage
-│ └── utils/ parseHtml, typed error classes
-└── frontend/ React + Vite SPA
-└── src/
-├── services/ api.js — single fetch entry point
-└── App.jsx Input form, loading/error/success states, report card
-
+│ └── utils/ HTML parsing + typed errors
+│
+├── frontend/ React + Vite SPA
+│ └── src/
+│ ├── services/ API communication
+│ └── App.jsx Input form, states, report card
+│
+├── screenshots/ Project screenshots
+│ ├── frontend-ui-display.png
+│ ├── backend-running.png
+│ ├── github-url.png
+│ ├── digital-heroes-url.png
+│ └── invalid-url-validation.png
+│
+└── README.md
 
 ## Setup
 
@@ -115,6 +126,34 @@ Returns `{ status: "ok", uptime, timestamp }`.
 cd backend
 npm test
 ```
+
+## Screenshots
+
+### Frontend UI Display
+
+![Frontend UI](screenshots/frontend-ui-display.png)
+
+
+### Backend Server Running
+
+![Backend Running](screenshots/backend-running.png)
+
+
+### API Testing (Postman)
+
+#### GitHub URL Audit
+
+![GitHub URL Test](screenshots/github-url.png)
+
+
+#### Digital Heroes URL Audit
+
+![Digital Heroes URL Test](screenshots/digital-heroes-url.png)
+
+
+#### Invalid URL Validation
+
+![Invalid URL Test](screenshots/invalid-url-validation.png)
 
 ## AI Usage
 

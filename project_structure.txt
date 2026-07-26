@@ -1,58 +1,48 @@
 .
-./.gitignore
-./backend
-./backend/.env
-./backend/.env.example
-./backend/package-lock.json
-./backend/package.json
-./backend/server.js
-./backend/src
-./backend/src/app.js
-./backend/src/config
-./backend/src/config/index.js
-./backend/src/middleware
-./backend/src/middleware/errorHandler.js
-./backend/src/middleware/notFoundHandler.js
-./backend/src/middleware/validateUrl.js
-./backend/src/routes
-./backend/src/services
-./backend/src/services/auditPage.js
-./backend/src/services/fetchPage.js
-./backend/src/utils
-./backend/src/utils/analyzeSeo.js
-./backend/src/utils/calculateScore.js
-./backend/src/utils/checkCanonical.js
-./backend/src/utils/checkFavicon.js
-./backend/src/utils/checkOpenGraph.js
-./backend/src/utils/checkPerformance.js
-./backend/src/utils/checkRobots.js
-./backend/src/utils/checkSitemap.js
-./backend/src/utils/checkStructuredData.js
-./backend/src/utils/checkTwitterCard.js
-./backend/src/utils/errors.js
-./backend/src/utils/parseHtml.js
-./frontend
-./frontend/.env
-./frontend/.env.example
-./frontend/.gitignore
-./frontend/eslint.config.js
-./frontend/index.html
-./frontend/package-lock.json
-./frontend/package.json
-./frontend/public
-./frontend/public/favicon.svg
-./frontend/public/icons.svg
-./frontend/README.md
-./frontend/src
-./frontend/src/App.css
-./frontend/src/App.jsx
-./frontend/src/assets
-./frontend/src/assets/hero.png
-./frontend/src/assets/react.svg
-./frontend/src/assets/vite.svg
-./frontend/src/index.css
-./frontend/src/main.jsx
-./frontend/src/services
-./frontend/src/services/api.js
-./frontend/vite.config.js
-./project_structure.txt
+.gitignore
+backend
+│   ├── .env
+│   ├── .env.example
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── server.js
+│   ├── src
+│   │   ├── app.js
+│   │   ├── config
+│   │   │   ├── index.js
+│   │   ├── middleware
+│   │   │   ├── errorHandler.js
+│   │   │   ├── notFoundHandler.js
+│   │   │   ├── validateUrl.js
+│   │   ├── routes
+│   │   ├── services
+│   │   │   ├── auditPage.js
+│   │   │   ├── fetchPage.js
+│   │   ├── utils
+│   │   │   ├── errors.js
+│   │   │   ├── parseHtml.js
+frontend
+│   ├── .env
+│   ├── .env.example
+│   ├── .gitignore
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   │   ├── favicon.svg
+│   │   ├── icons.svg
+│   ├── README.md
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.jsx
+│   │   ├── assets
+│   │   │   ├── hero.png
+│   │   │   ├── react.svg
+│   │   │   ├── vite.svg
+│   │   ├── index.css
+│   │   ├── main.jsx
+│   │   ├── services
+│   │   │   ├── api.js
+│   ├── vite.config.js
+project_structure.txt

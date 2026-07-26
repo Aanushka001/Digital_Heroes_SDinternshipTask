@@ -1,51 +1,50 @@
+````md
 # Page Pulse
 
-Paste a URL, get back an instant audit: HTTP status, response time, page title, meta description, H1 count, images missing alt text, and approximate word count.
+Paste a URL and get an instant technical audit with HTTP status, response time, page title, meta description, H1 count, images missing alt text, and approximate word count.
 
-Built for the Digital Heroes SDE internship task.
+Built for the Digital Heroes SDE Internship Task.
 
-# Page Pulse
+## Deployment
 
-Paste a URL, get back an instant audit: HTTP status, response time, page title, meta description, H1 count, images missing alt text, and approximate word count.
+**Live Application:** https://digital-heroes-s-dinternship-task.vercel.app/
 
-Built for the Digital Heroes SDE internship task.
-
-**Live site:** https://digital-heroes-s-dinternship-task.vercel.app/
-**API base:** https://digital-heroes-sdinternshiptask.onrender.com
-
-
+**API Base URL:** https://digital-heroes-sdinternshiptask.onrender.com
 
 ---
 
 ## Project Structure
-## Project Structure
 
-
+```text
 Digital_Heroes_SDinternshipTask/
-├── backend/ Node.js + Express API
-│ └── src/
-│ ├── config/ Environment configuration
-│ ├── middleware/ URL validation + error handling
-│ ├── services/ fetchPage, auditPage
-│ └── utils/ HTML parsing + typed errors
 │
-├── frontend/ React + Vite SPA
-│ └── src/
-│ ├── services/ API communication
-│ └── App.jsx Input form, states, report card
+├── backend/                         Node.js + Express API
+│   └── src/
+│       ├── config/                  Environment configuration
+│       ├── middleware/              URL validation and error handling
+│       ├── services/                Page fetching and auditing logic
+│       └── utils/                   HTML parsing and error utilities
 │
-├── screenshots/ Project screenshots
-│ ├── frontend-ui-display.png
-│ ├── backend-running.png
-│ ├── github-url.png
-│ ├── digital-heroes-url.png
-│ └── invalid-url-validation.png
+├── frontend/                        React + Vite SPA
+│   └── src/
+│       ├── services/                API communication layer
+│       └── App.jsx                  UI, states, and report display
+│
+├── screenshots/                     Application screenshots
+│   ├── frontend-ui-display.png
+│   ├── backend-running.png
+│   ├── github-url.png
+│   ├── digital-heroes-url.png
+│   └── invalid-url-validation.png
 │
 └── README.md
+````
 
-## Setup
+---
 
-### Backend
+# Setup Instructions
+
+## Backend Setup
 
 ```bash
 cd backend
@@ -54,9 +53,15 @@ npm install
 npm run dev
 ```
 
-Runs on `http://localhost:3001`.
+Backend runs on:
 
-### Frontend
+```text
+http://localhost:3001
+```
+
+---
+
+## Frontend Setup
 
 ```bash
 cd frontend
@@ -65,18 +70,30 @@ npm install
 npm run dev
 ```
 
-Runs on `http://localhost:5173`.
+Frontend runs on:
 
-## API Contract
-
-### `POST /audit`
-
-**Request**
-```json
-{ "url": "https://example.com" }
+```text
+http://localhost:5173
 ```
 
-**Success — 200 OK**
+---
+
+# API Documentation
+
+## POST `/audit`
+
+Analyzes the provided webpage URL and returns an audit report.
+
+### Request
+
+```json
+{
+  "url": "https://example.com"
+}
+```
+
+### Success Response
+
 ```json
 {
   "success": true,
@@ -94,7 +111,8 @@ Runs on `http://localhost:5173`.
 }
 ```
 
-**Error — 4xx/5xx**
+### Error Response
+
 ```json
 {
   "success": false,
@@ -106,69 +124,168 @@ Runs on `http://localhost:5173`.
 }
 ```
 
-| Status | Code | When |
-|---|---|---|
-| 400 | `INVALID_URL` | Missing URL, malformed URL, or non-http(s) protocol |
-| 422 | `NOT_HTML` | Target responds with a non-HTML content type |
-| 502 | `DNS_FAILURE` | Domain unreachable or other network-level failure |
-| 504 | `TIMEOUT` | Target did not respond within `FETCH_TIMEOUT_MS` |
-| 508 | `REDIRECT_LOOP` | Target redirects more than Node's redirect limit |
-| 413 | `RESPONSE_TOO_LARGE` | Response body exceeds `MAX_RESPONSE_BYTES` |
-| 500 | `INTERNAL_ERROR` | Unexpected server error |
+---
 
-### `GET /health`
+## Supported Error Codes
 
-Returns `{ status: "ok", uptime, timestamp }`.
+| Status | Code                 | Description                                          |
+| ------ | -------------------- | ---------------------------------------------------- |
+| 400    | `INVALID_URL`        | Missing URL, invalid format, or unsupported protocol |
+| 422    | `NOT_HTML`           | Target does not return HTML content                  |
+| 502    | `DNS_FAILURE`        | Domain unreachable or network failure                |
+| 504    | `TIMEOUT`            | Target URL exceeded request timeout                  |
+| 508    | `REDIRECT_LOOP`      | Too many redirects detected                          |
+| 413    | `RESPONSE_TOO_LARGE` | Response exceeds maximum size                        |
+| 500    | `INTERNAL_ERROR`     | Unexpected server error                              |
 
-## Design Decisions
+---
 
-**1. Native `fetch` over Axios or Got.** Node 18+ ships the Fetch API built in — no extra dependency to audit or update. `AbortController` gives explicit, testable timeout behavior, and `fetch` only throws on network-level failures (not on 4xx/5xx), which is what we want: a target returning 404 is still a valid audit result, not an error.
+## GET `/health`
 
-**2. Cheerio over JSDOM for HTML parsing.** We only need to read static HTML structure — title, meta tags, heading counts, image attributes. JSDOM's main feature (executing page JavaScript) is unnecessary here and is a larger, heavier attack surface for a server that fetches arbitrary third-party URLs. Cheerio's jQuery-style API is fast and makes the extraction code self-documenting.
+Returns backend health information.
 
-**3. Scoped the API down to exactly the 7 required fields.** Earlier in development I built out several extra checks (robots.txt, sitemap, Open Graph tags, an SEO score). None of that is in the brief, and a bug I found in the timeout handling for those extra checks — a request could hang indefinitely — convinced me that the added surface area was a real risk, not just extra value. I removed all of it and kept the API to exactly what's specified, which is easier to test fully and easier to stand behind.
+Example response:
 
-## Testing
+```json
+{
+  "status": "ok",
+  "uptime": 120.45,
+  "timestamp": "2026-07-26T12:00:00.000Z"
+}
+```
+
+---
+
+# Testing
+
+## Backend Tests
+
+Run:
 
 ```bash
 cd backend
+npm install
 npm test
 ```
 
-## Screenshots
+Backend tests cover:
 
-### Frontend UI Display
+* URL validation
+* API responses
+* Error handling
+* Page audit functionality
 
-![Frontend UI](screenshots/frontend-ui-display.png)
+## Frontend Tests
 
+Run:
 
-### Backend Server Running
+```bash
+cd frontend
+npm install
+npm test
+```
 
-![Backend Running](screenshots/backend-running.png)
+Frontend tests cover:
 
+* Component rendering
+* User input handling
+* Loading and error states
+* API interaction behaviour
 
-### API Testing (Postman)
+## Manual Testing
 
-#### GitHub URL Audit
+Start backend:
 
-![GitHub URL Test](screenshots/github-url.png)
+```bash
+cd backend
+npm run dev
+```
 
+Verify:
 
-#### Digital Heroes URL Audit
+```text
+GET http://localhost:3001/health
+```
 
-![Digital Heroes URL Test](screenshots/digital-heroes-url.png)
+Expected:
 
+```json
+{
+  "status": "ok"
+}
+```
 
-#### Invalid URL Validation
+Start frontend:
 
-![Invalid URL Test](screenshots/invalid-url-validation.png)
+```bash
+cd frontend
+npm run dev
+```
 
-## AI Usage
+Open:
 
-I used Claude as a development assistant throughout this project. It helped me understand the project requirements, review the overall architecture, compare implementation approaches, and identify appropriate design patterns for features such as HTML parsing and testing. I also used it to review my code, explain errors, and suggest potential fixes for issues like redirect-loop detection and timeout handling.
+```text
+http://localhost:5173
+```
 
-All suggestions were reviewed, implemented, and tested by me before being included in the project. I made the final decisions on the project structure, implementation, debugging, testing, and overall scope to ensure the application met the internship requirements.
+Enter a valid URL and verify that the audit report is generated successfully.
 
-## Credits
+---
 
-Built for [Digital Heroes Training Task](https://digitalheroesco.com)
+# Screenshots
+
+## Application
+
+<div>
+<img src="screenshots/frontend-ui-display.png" width="48%" />
+<img src="screenshots/backend-running.png" width="48%" />
+</div>
+
+## API Testing (Postman)
+
+<div>
+<img src="screenshots/github-url.png" width="31%" />
+<img src="screenshots/digital-heroes-url.png" width="31%" />
+<img src="screenshots/invalid-url-validation.png" width="31%" />
+</div>
+
+---
+
+# Design Decisions
+
+## Native Fetch API
+
+Node.js 18+ provides the Fetch API natively, removing the need for additional HTTP dependencies. `AbortController` is used for timeout handling and predictable request cancellation.
+
+## Cheerio HTML Parser
+
+Cheerio is used instead of JSDOM because the application only requires static HTML analysis such as titles, metadata, headings, and image attributes. This keeps the implementation lightweight and secure.
+
+## Focused Audit Scope
+
+The API was intentionally limited to the required audit fields. Additional checks were avoided to maintain reliability, simplify testing, and keep the application aligned with the internship requirements.
+
+---
+
+# AI Usage
+
+Claude was used as a development assistant during this project for:
+
+* Understanding requirements
+* Reviewing architecture decisions
+* Debugging issues
+* Exploring implementation approaches
+* Improving error handling and testing strategies
+
+All suggestions were reviewed, implemented, and tested manually. Final decisions regarding architecture, implementation, debugging, and project scope were made independently.
+
+---
+
+# Credits
+
+Built for the Digital Heroes Training Task.
+
+[https://digitalheroesco.com](https://digitalheroesco.com)
+
+```
+```

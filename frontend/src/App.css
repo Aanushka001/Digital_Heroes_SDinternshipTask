@@ -1,0 +1,91 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #0f1115;
+  color: #e6e6e6;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 20px 24px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header { text-align: center; margin-bottom: 32px; }
+header h1 { font-size: 2rem; margin: 0; }
+.tagline { color: #9ca3af; margin-top: 8px; }
+
+.url-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.url-form input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #2d2f36;
+  background: #1a1c22;
+  color: #e6e6e6;
+  font-size: 1rem;
+}
+
+.url-form button {
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #4f46e5;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.url-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.status { text-align: center; padding: 16px; }
+.status.error { color: #f87171; }
+
+.report-card {
+  background: #16181d;
+  border: 1px solid #2d2f36;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.metric {
+  background: #1a1c22;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-label { font-size: 0.8rem; color: #9ca3af; }
+.metric-value { font-size: 1.2rem; font-weight: 600; }
+
+.text-fields p { margin: 8px 0; }
+.score { margin-top: 16px; }
+
+.extra-checks { margin-top: 16px; }
+.extra-checks summary { cursor: pointer; color: #9ca3af; }
+.extra-checks ul { list-style: none; padding: 0; margin-top: 10px; }
+.extra-checks li { padding: 6px 0; }
+.extra-checks li.warn { color: #fbbf24; }
+
+footer { margin-top: auto; text-align: center; padding-top: 32px; }
+footer a { color: #9ca3af; text-decoration: none; font-size: 0.9rem; }
+footer a:hover { text-decoration: underline; }

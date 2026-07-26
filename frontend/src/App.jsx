@@ -1,74 +1,102 @@
-import { useState } from 'react';
-import { auditUrl } from './services/api';
-import './App.css';
+import { useState } from "react";
+import { auditUrl } from "./services/api";
+import "./App.css";
 
-const STATE = { IDLE: 'idle', LOADING: 'loading', ERROR: 'error', SUCCESS: 'success' };
+const STATE = {
+  IDLE: "idle",
+  LOADING: "loading",
+  ERROR: "error",
+  SUCCESS: "success",
+};
 
 function App() {
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
   const [status, setStatus] = useState(STATE.IDLE);
   const [report, setReport] = useState(null);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     if (!url.trim()) {
-      setErrorMsg('Please enter a URL to audit.');
       setStatus(STATE.ERROR);
+      setErrorMsg("Please enter a URL to audit.");
       return;
     }
 
     setStatus(STATE.LOADING);
-    setErrorMsg('');
+    setErrorMsg("");
+    setReport(null);
 
     try {
       const result = await auditUrl(url.trim());
       setReport(result);
       setStatus(STATE.SUCCESS);
     } catch (err) {
-      setErrorMsg(err.message);
       setStatus(STATE.ERROR);
+      setErrorMsg(err.message);
     }
   }
 
   return (
-    <div className="app">
-      <header>
+    <main className="app">
+      <section className="hero">
         <h1>Page Pulse</h1>
-        <p className="tagline">Paste a URL. Get an instant audit.</p>
-      </header>
+        <p>
+          Instantly analyse any webpage and receive a quick technical summary.
+        </p>
+      </section>
 
-      <form onSubmit={handleSubmit} className="url-form">
+      <form className="url-form" onSubmit={handleSubmit}>
         <input
           type="text"
+          placeholder="https://example.com"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          placeholder="https://example.com"
           disabled={status === STATE.LOADING}
         />
+
         <button type="submit" disabled={status === STATE.LOADING}>
-          {status === STATE.LOADING ? 'Auditing…' : 'Analyse'}
+          {status === STATE.LOADING ? "Auditing..." : "Analyse"}
         </button>
       </form>
 
-      {status === STATE.LOADING && <p className="status loading">Fetching and analysing the page…</p>}
-      {status === STATE.ERROR && <p className="status error">⚠ {errorMsg}</p>}
-      {status === STATE.SUCCESS && report && <ReportCard report={report} />}
+      {status === STATE.LOADING && (
+        <div className="status loading">
+          Fetching and analysing the webpage...
+        </div>
+      )}
+
+      {status === STATE.ERROR && (
+        <div className="status error">
+          {errorMsg}
+        </div>
+      )}
+
+      {status === STATE.SUCCESS && report && (
+        <ReportCard report={report} />
+      )}
 
       <footer>
-        <a href="https://digitalheroesco.com" target="_blank" rel="noopener noreferrer">
-          Built for Digital Heroes Training Task
+        <a
+          href="https://digitalheroesco.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Built for the Digital Heroes Internship Task
         </a>
       </footer>
-    </div>
+    </main>
   );
 }
 
 function ReportCard({ report }) {
   return (
-    <div className="report-card">
-      <h2>Report for {report.url}</h2>
+    <section className="report-card">
+      <div className="report-header">
+        <h2>Audit Report</h2>
+        <p>{report.url}</p>
+      </div>
 
       <div className="metrics-grid">
         <Metric label="HTTP Status" value={report.httpStatus} />
@@ -78,11 +106,18 @@ function ReportCard({ report }) {
         <Metric label="Word Count" value={report.wordCount} />
       </div>
 
-      <div className="text-fields">
-        <p><strong>Title:</strong> {report.pageTitle || <em>none found</em>}</p>
-        <p><strong>Meta Description:</strong> {report.metaDescription || <em>none found</em>}</p>
+      <div className="detail-section">
+        <div className="detail-card">
+          <h3>Page Title</h3>
+          <p>{report.pageTitle || "No title found."}</p>
+        </div>
+
+        <div className="detail-card">
+          <h3>Meta Description</h3>
+          <p>{report.metaDescription || "No meta description found."}</p>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 

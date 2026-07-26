@@ -1,17 +1,16 @@
+
 # Page Pulse
 
 Paste a URL, get back an instant audit: HTTP status, response time, page title, meta description, H1 count, images missing alt text, and approximate word count.
 
 Built for the Digital Heroes SDE internship task.
 
-**Live site:** _(added after deployment)_
-**API base:** _(added after deployment)_
+**Live site:** https://digital-heroes-s-dinternship-task.vercel.app/
+**API base:** https://digital-heroes-sdinternshiptask.onrender.com
 
 ---
 
 ## Project Structure
-## Project Structure
-
 
 Digital_Heroes_SDinternshipTask/
 ├── backend/ Node.js + Express API
@@ -44,6 +43,7 @@ cd backend
 cp .env.example .env
 npm install
 npm run dev
+
 ```
 
 Runs on `http://localhost:3001`.
@@ -55,6 +55,7 @@ cd frontend
 cp .env.example .env
 npm install
 npm run dev
+
 ```
 
 Runs on `http://localhost:5173`.
@@ -64,16 +65,19 @@ Runs on `http://localhost:5173`.
 ### `POST /audit`
 
 **Request**
+
 ```json
-{ "url": "https://example.com" }
+{ "url": "[https://example.com](https://example.com)" }
+
 ```
 
 **Success — 200 OK**
+
 ```json
 {
   "success": true,
   "report": {
-    "url": "https://example.com/",
+    "url": "[https://example.com/](https://example.com/)",
     "auditedAt": "2026-07-26T12:00:00.000Z",
     "httpStatus": 200,
     "responseTimeMs": 189,
@@ -84,9 +88,11 @@ Runs on `http://localhost:5173`.
     "wordCount": 17
   }
 }
+
 ```
 
 **Error — 4xx/5xx**
+
 ```json
 {
   "success": false,
@@ -96,10 +102,11 @@ Runs on `http://localhost:5173`.
     "statusCode": 504
   }
 }
+
 ```
 
 | Status | Code | When |
-|---|---|---|
+| --- | --- | --- |
 | 400 | `INVALID_URL` | Missing URL, malformed URL, or non-http(s) protocol |
 | 422 | `NOT_HTML` | Target responds with a non-HTML content type |
 | 502 | `DNS_FAILURE` | Domain unreachable or other network-level failure |
@@ -125,35 +132,22 @@ Returns `{ status: "ok", uptime, timestamp }`.
 ```bash
 cd backend
 npm test
+
 ```
 
 ## Screenshots
 
 ### Frontend UI Display
 
-![Frontend UI](screenshots/frontend-ui-display.png)
-
-
 ### Backend Server Running
-
-![Backend Running](screenshots/backend-running.png)
-
 
 ### API Testing (Postman)
 
 #### GitHub URL Audit
 
-![GitHub URL Test](screenshots/github-url.png)
-
-
 #### Digital Heroes URL Audit
 
-![Digital Heroes URL Test](screenshots/digital-heroes-url.png)
-
-
 #### Invalid URL Validation
-
-![Invalid URL Test](screenshots/invalid-url-validation.png)
 
 ## AI Usage
 
@@ -164,3 +158,7 @@ All suggestions were reviewed, implemented, and tested by me before being includ
 ## Credits
 
 Built for [Digital Heroes Training Task](https://digitalheroesco.com)
+
+```
+
+```

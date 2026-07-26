@@ -32,16 +32,18 @@ export async function fetchPage(url) {
       throw new TimeoutError(config.fetchTimeoutMs);
     }
 
-    const message = err.message || '';
+    const detail = err.cause?.message || err.message || '';
+    const code = err.cause?.code || '';
 
-    if (message.includes('ENOTFOUND') || message.includes('getaddrinfo')) {
+    if (
+      code === 'ENOTFOUND' ||
+      detail.includes('ENOTFOUND') ||
+      detail.includes('getaddrinfo')
+    ) {
       throw new DnsFailureError(extractHost(url));
     }
 
-    if (
-      message.toLowerCase().includes('redirect') ||
-      message.toLowerCase().includes('redirects')
-    ) {
+    if (detail.toLowerCase().includes('redirect')) {
       throw new RedirectLoopError();
     }
 

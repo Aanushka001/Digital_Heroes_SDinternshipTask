@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseHtml } from '../src/utils/parseHtml.js';
+import { parseHtml } from '../../backend/src/utils/parseHtml.js';
 
 describe('parseHtml', () => {
   it('happy path: extracts all fields from a normal page', () => {
@@ -17,19 +17,17 @@ describe('parseHtml', () => {
         </body>
       </html>
     `;
-
     const result = parseHtml(html);
 
     expect(result.title).toBe('Example Domain');
     expect(result.metaDescription).toBe('A test page for Page Pulse.');
     expect(result.h1Count).toBe(1);
-    expect(result.missingAltCount).toBe(1); // banner.jpg has no alt
+    expect(result.missingAltCount).toBe(1);
     expect(result.wordCount).toBeGreaterThan(0);
   });
 
   it('failure case: missing title and meta description return empty strings, not a crash', () => {
     const html = `<html><body><h1>No head tags here</h1></body></html>`;
-
     const result = parseHtml(html);
 
     expect(result.title).toBe('');
@@ -37,9 +35,8 @@ describe('parseHtml', () => {
     expect(result.h1Count).toBe(1);
   });
 
-  it('failure case: empty body returns zero word count and zero H1s, not a crash', () => {
+  it('failure case: empty body returns zero counts, not a crash', () => {
     const html = `<html><head></head><body></body></html>`;
-
     const result = parseHtml(html);
 
     expect(result.wordCount).toBe(0);
@@ -56,9 +53,7 @@ describe('parseHtml', () => {
         <img src="d.jpg">
       </body></html>
     `;
-
     const result = parseHtml(html);
-
-    expect(result.missingAltCount).toBe(3);
+    expect(result.missingAltCount).toBe(3); // a, b (empty), d
   });
 });
